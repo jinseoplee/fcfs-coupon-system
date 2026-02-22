@@ -1,3 +1,18 @@
 spring:
   application:
     name: fcfs-coupon-system
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/fcfs_coupon?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+    username: root
+    password: 1234
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
