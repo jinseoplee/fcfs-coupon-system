@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: coupon-issuance-system
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
