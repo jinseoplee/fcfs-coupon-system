@@ -20,7 +20,7 @@ public class CouponIssueService {
     @Transactional
     public void issue(Long couponId, Long userId) {
         // 쿠폰 조회
-        Coupon coupon = findCoupon(couponId);
+        Coupon coupon = findCouponWithLock(couponId);
 
         // 중복 발급 확인
         checkAlreadyIssued(couponId, userId);
@@ -32,8 +32,8 @@ public class CouponIssueService {
         saveCouponIssue(coupon, userId);
     }
 
-    private Coupon findCoupon(Long couponId) {
-        return couponRepository.findById(couponId)
+    private Coupon findCouponWithLock(Long couponId) {
+        return couponRepository.findByIdWithLock(couponId)
                 .orElseThrow(CouponNotFoundException::new);
     }
 
