@@ -1,5 +1,6 @@
 package io.github.jinseoplee.coupon.domain;
 
+import io.github.jinseoplee.coupon.exception.CouponOutOfStockException;
 import io.github.jinseoplee.global.domain.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -30,5 +31,12 @@ public class Coupon extends BaseTimeEntity {
         this.title = title;
         this.totalQuantity = totalQuantity;
         this.issuedQuantity = 0;
+    }
+
+    public void issue() {
+        if (this.issuedQuantity >= this.totalQuantity) {
+            throw new CouponOutOfStockException();
+        }
+        this.issuedQuantity++;
     }
 }
