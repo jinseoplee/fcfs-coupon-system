@@ -51,7 +51,7 @@ class CouponIssueServiceTest {
         // given
         Coupon coupon = createCoupon(10);
 
-        given(couponRepository.findById(couponId)).willReturn(Optional.of(coupon));
+        given(couponRepository.findByIdWithLock(couponId)).willReturn(Optional.of(coupon));
         given(couponIssueRepository.existsByCouponIdAndUserId(couponId, userId)).willReturn(false);
 
         // before 상태 검증
@@ -69,7 +69,7 @@ class CouponIssueServiceTest {
     @DisplayName("쿠폰이 존재하지 않으면 CouponNotFoundException 예외가 발생한다")
     void issue_ShouldThrowCouponNotFoundException_WhenCouponNotFound() {
         // given
-        given(couponRepository.findById(couponId)).willReturn(Optional.empty());
+        given(couponRepository.findByIdWithLock(couponId)).willReturn(Optional.empty());
 
         // when & then
         assertThrows(CouponNotFoundException.class,
@@ -84,7 +84,7 @@ class CouponIssueServiceTest {
         // given
         Coupon coupon = createCoupon(10);
 
-        given(couponRepository.findById(couponId)).willReturn(Optional.of(coupon));
+        given(couponRepository.findByIdWithLock(couponId)).willReturn(Optional.of(coupon));
         given(couponIssueRepository.existsByCouponIdAndUserId(couponId, userId)).willReturn(true);
 
         // when & then
@@ -101,7 +101,7 @@ class CouponIssueServiceTest {
         Coupon coupon = createCoupon(1);
         coupon.issue(); // 재고 소진 상태
 
-        given(couponRepository.findById(couponId)).willReturn(Optional.of(coupon));
+        given(couponRepository.findByIdWithLock(couponId)).willReturn(Optional.of(coupon));
         given(couponIssueRepository.existsByCouponIdAndUserId(couponId, userId)).willReturn(false);
 
         // when & then
